@@ -8,13 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace KatpotCS
 {
     public partial class Form1 : Form
     {
+        public bool UserExitRequested;
+        public bool SerialPortValidated;
+
         public Form1()
         {
             InitializeComponent();
+            UserExitRequested = false;
+            SerialPortValidated = false;
+
         }
 
         private void fileMenuToolStripMenuItem_Click(object sender, EventArgs e)
@@ -93,6 +100,21 @@ namespace KatpotCS
         }
 
         private void manufacturingDateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void exitProgramToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Do u really want to  quit ?", " ", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+            {
+                this.UserExitRequested = true;
+                //Application::Exit();
+            }
+        }
+
+
+        private void returnToProgramToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
