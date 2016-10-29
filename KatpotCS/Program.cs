@@ -7,6 +7,35 @@ using System.IO.Ports;
 
 namespace KatpotCS
 {
+    enum WirelessMonitorStatus
+    {
+        SERIAL_PORT_SUCCESS = 0,
+        SERIAL_PORT_UNINITIALIZED,
+        SERIAL_PORT_WRITE_TIMEOUT,
+        SERIAL_PORT_READTIMEOUT,
+        SERIAL_PORT_INVALID_RESPONSE,
+        SERIAL_PORT_NOT_DETECTED,
+        SERIAL_PORT_AUTHORIZATION_ERROR,
+        SERIAL_PORT_INVALID_NAME_ERROR,
+        SERIAL_PORT_ARGUMENT_ERROR,
+        SERIAL_PORT_IO_ERROR,
+        SERIAL_PORT_ALREADY_OPEN_ERROR,
+        SERIAL_PORT_SYNC_LOST,
+    };
+
+    public static class Constants
+    {
+        public const int SERIAL_PORT_BAUDRATE_VAL = 9600;
+        public const int SERIAL_PORT_DATA_BITS_VAL = 8;
+        public const int SERIAL_PORT_READ_TIMEOUT_VAL = 500;
+        public const int SERIAL_PORT_WRITE_TIMEOUT_VAL = 500;
+        public const int SERIAL_PORT_READ_TIMEOUT_SYNC_VAL = 1000;
+        public const int MAX_SYNC_BYTES = 50;
+        public const int SERIAL_PORT_SUCCESS = 0;
+        public const int SERIAL_PORT_PACKET_SIZE = 6;
+        public const int MAX_NUM_TESTS = 3;
+
+    }
 
     static class Program
     {

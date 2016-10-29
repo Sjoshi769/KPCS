@@ -9,20 +9,36 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
+
 namespace KatpotCS
 {
     public partial class Form1 : Form
     {
-        public bool UserExitRequested;
-        public bool SerialPortValidated;
+
 
         public Form1()
         {
             InitializeComponent();
-            UserExitRequested = false;
-            SerialPortValidated = false;
-
         }
+
+        delegate void ClearChartDelegate(int index);
+
+       
+	    public void ClearChart(int index)
+        {
+            if (this.chart1.InvokeRequired)
+            {
+                ClearChartDelegate  d =
+                    new ClearChartDelegate(ClearChart);
+                this.Invoke(d, index);
+
+            }
+            else
+            {
+                //this.series1[index]->Points->Clear();
+            }
+        }
+
 
         private void fileMenuToolStripMenuItem_Click(object sender, EventArgs e)
         {

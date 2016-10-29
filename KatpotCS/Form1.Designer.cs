@@ -1,4 +1,6 @@
-﻿namespace KatpotCS
+﻿using System.Drawing;
+
+namespace KatpotCS
 {
     partial class Form1
     {
@@ -425,6 +427,39 @@
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
+
+            UserExitRequested = false;
+            SerialPortValidated = false;
+            chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.series1 = new System.Windows.Forms.DataVisualization.Charting.Series[3];
+            chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+
+            // 
+            // chart1
+            // 
+            this.chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            this.legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new Point(12, 42);
+            this.chart1.Name = "chart1";
+            for (int i = 0; i < Constants.MAX_NUM_TESTS; i++)
+            {
+                //
+                // series[]
+                //
+                this.series1[i] = new System.Windows.Forms.DataVisualization.Charting.Series();
+                this.series1[i].ChartArea = "ChartArea1";
+                this.series1[i].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+                this.series1[i].Legend = "Legend1";
+                this.series1[i].Name = "Sample  Vs Load Test-" + (i + 1).ToString();
+                this.chart1.Series.Add(series1[i]);
+                this.chart1.Size = new Size(984, 357);
+                this.chart1.TabIndex = 1;
+                this.chart1.Text = "chart1";
+            }
+
             // 
             // Form1
             // 
@@ -433,6 +468,7 @@
             this.ClientSize = new System.Drawing.Size(906, 325);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.Controls.Add(this.chart1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.menuStrip1.ResumeLayout(false);
@@ -490,6 +526,14 @@
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox10;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox11;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox12;
+
+        public bool UserExitRequested;
+        public bool SerialPortValidated;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.DataVisualization.Charting.Series[] series1;
+        private System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1;
+        private System.Windows.Forms.DataVisualization.Charting.Legend legend1;
+
     }
 }
 
