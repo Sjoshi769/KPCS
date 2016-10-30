@@ -45,10 +45,6 @@ namespace KatpotCS
 
         }
 
-        private void grdiOffToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void iToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -77,7 +73,20 @@ namespace KatpotCS
 
         private void gridOnToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //turn on Grid
+            this.chartArea1.AxisX.MajorGrid.LineWidth = 1;
+            this.chartArea1.AxisY.MajorGrid.LineWidth = 1;
+            this.gridOffToolStripMenuItem.Checked = false;
+            this.gridOnToolStripMenuItem.Checked = true;
 
+        }
+        private void gridOffToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //turn on Grid
+            this.chartArea1.AxisX.MajorGrid.LineWidth = 0;
+            this.chartArea1.AxisY.MajorGrid.LineWidth = 0;
+            this.gridOffToolStripMenuItem.Checked = true;
+            this.gridOnToolStripMenuItem.Checked = false;
         }
 
         private void autoCaptureToolStripMenuItem_Click(object sender, EventArgs e)

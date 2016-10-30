@@ -37,7 +37,7 @@ namespace KatpotCS
             this.cOMPortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gridOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gridOnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.grdiOffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gridOffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.captureOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoCaptureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manualCaptureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -132,7 +132,7 @@ namespace KatpotCS
             // 
             this.gridOptionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gridOnToolStripMenuItem,
-            this.grdiOffToolStripMenuItem});
+            this.gridOffToolStripMenuItem});
             this.gridOptionsToolStripMenuItem.Name = "gridOptionsToolStripMenuItem";
             this.gridOptionsToolStripMenuItem.Size = new System.Drawing.Size(86, 20);
             this.gridOptionsToolStripMenuItem.Text = "Grid Options";
@@ -145,12 +145,12 @@ namespace KatpotCS
             this.gridOnToolStripMenuItem.Text = "Grid On";
             this.gridOnToolStripMenuItem.Click += new System.EventHandler(this.gridOnToolStripMenuItem_Click);
             // 
-            // grdiOffToolStripMenuItem
+            // gridOffToolStripMenuItem
             // 
-            this.grdiOffToolStripMenuItem.Name = "grdiOffToolStripMenuItem";
-            this.grdiOffToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-            this.grdiOffToolStripMenuItem.Text = "Grid Off";
-            this.grdiOffToolStripMenuItem.Click += new System.EventHandler(this.grdiOffToolStripMenuItem_Click);
+            this.gridOffToolStripMenuItem.Name = "gridOffToolStripMenuItem";
+            this.gridOffToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.gridOffToolStripMenuItem.Text = "Grid Off";
+            this.gridOffToolStripMenuItem.Click += new System.EventHandler(this.gridOffToolStripMenuItem_Click);
             // 
             // captureOptionsToolStripMenuItem
             // 
@@ -489,7 +489,7 @@ namespace KatpotCS
         private System.Windows.Forms.ToolStripMenuItem cOMPortToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gridOptionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gridOnToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem grdiOffToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gridOffToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem captureOptionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem autoCaptureToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manualCaptureToolStripMenuItem;
