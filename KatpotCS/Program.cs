@@ -34,6 +34,7 @@ namespace KatpotCS
         public const int SERIAL_PORT_SUCCESS = 0;
         public const int SERIAL_PORT_PACKET_SIZE = 6;
         public const int MAX_NUM_TESTS = 3;
+        public const int MAX_COMM_PORTS_IN_SYSTEM = 5;
 
     }
 

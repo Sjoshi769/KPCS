@@ -30,8 +30,8 @@ namespace KatpotCS
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();            
+            this.chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            this.legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();            
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileMenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,8 +82,6 @@ namespace KatpotCS
             this.label2 = new System.Windows.Forms.Label();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.series1 = new System.Windows.Forms.DataVisualization.Charting.Series[3];
-            this.chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            this.legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
 
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -566,7 +564,11 @@ namespace KatpotCS
         private System.Windows.Forms.DataVisualization.Charting.Legend legend1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private string SelectedCommPort;
+        private string SelectedCommPort = null;
+        private string[] SystemserialPorts = null;
+        private int NumCommPorts = 0;
+        private System.Windows.Forms.ToolStripMenuItem[] COMToolStripMenuItemRuntimeArray;
+
     }
 }
 

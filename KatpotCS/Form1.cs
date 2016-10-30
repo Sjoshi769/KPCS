@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.IO.Ports;
 
 
 namespace KatpotCS
@@ -140,6 +140,71 @@ namespace KatpotCS
             }
         }
 
+
+        delegate void GetSystemCommPortsAndInitCommMenuDelegate();
+
+
+        public void GetSystemCommPortsAndInitCommMenu()
+        {
+
+            if (this.InvokeRequired)
+            {
+                GetSystemCommPortsAndInitCommMenuDelegate d =
+                    new GetSystemCommPortsAndInitCommMenuDelegate(GetSystemCommPortsAndInitCommMenu);
+                this.Invoke(d);
+                return;
+            }
+            else
+            {
+                int temp;
+
+                try
+                {
+                    if (this.SystemserialPorts != null)
+                        this.SystemserialPorts = null;
+                    // Get a list of serial port names.
+                    SystemserialPorts = SerialPort.GetPortNames();
+                }
+                catch (Win32Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+                NumCommPorts = 0;
+
+                // Display each port name to the console. 
+                foreach (String port in SystemserialPorts)
+
+                {
+                    //Console::WriteLine(port);
+                    NumCommPorts++;
+                }
+
+
+                if (NumCommPorts > Constants.MAX_COMM_PORTS_IN_SYSTEM)
+                    NumCommPorts = Constants.MAX_COMM_PORTS_IN_SYSTEM;
+
+                if (COMToolStripMenuItemRuntimeArray != null)
+                    COMToolStripMenuItemRuntimeArray = null;
+
+                //if (this->toolStripMenuItem2->DropDownItems)
+                //	delete (this->toolStripMenuItem2->DropDownItems);
+
+                COMToolStripMenuItemRuntimeArray = new System.Windows.Forms.ToolStripMenuItem[NumCommPorts];
+
+                for (temp = 0; temp < NumCommPorts; temp++)
+                {
+
+                    this.COMToolStripMenuItemRuntimeArray[temp].Name = "cOM" + temp.ToString() + "ToolStripMenuItem";
+                    this.COMToolStripMenuItemRuntimeArray[temp].Size = new System.Drawing.Size(114, 22);
+                    this.COMToolStripMenuItemRuntimeArray[temp].Text = SystemserialPorts[temp];
+                    this.COMToolStripMenuItemRuntimeArray[temp].Click += new System.EventHandler(cOMToolStripMenuItem_Click);
+
+                }
+
+            }
+        }
+
         private void fileMenuToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -238,6 +303,12 @@ namespace KatpotCS
             }
         }
 
+        private void cOMToolStripMenuItem_Click(object  sender, EventArgs  e)
+        {
+            SelectedCommPort = ((System.Windows.Forms.ToolStripMenuItem)sender).Text;
+            SerialPortValidated = false;
+        }
+        
 
         private void returnToProgramToolStripMenuItem_Click(object sender, EventArgs e)
         {
