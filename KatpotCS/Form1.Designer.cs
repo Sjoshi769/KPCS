@@ -564,9 +564,10 @@ namespace KatpotCS
         private System.Windows.Forms.DataVisualization.Charting.Legend legend1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private string SelectedCommPort = null;
+        public string SelectedCommPort = null; 
         private string[] SystemserialPorts = null;
-        private int NumCommPorts = 0;
+        public int NumCommPorts = 0;
+        public int TestSelected = 0;
         private System.Windows.Forms.ToolStripMenuItem[] COMToolStripMenuItemRuntimeArray;
 
     }

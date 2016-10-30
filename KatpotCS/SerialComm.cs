@@ -11,7 +11,7 @@ namespace KatpotCS
 
 
 
-    abstract class KPSerialPort
+    public partial class KPSerialPort : Object
     {
 
 #if EMULATE_SERIAL_PORT
@@ -20,8 +20,15 @@ namespace KatpotCS
         //mt19937 gen(rd());
         private static int l = 0;
 #endif
+        public SerialPort _serialPort;
 
-        public int InitSerialPort(SerialPort _serialPort, String PortName, int NumPorts, int TestSelected)
+        public KPSerialPort()
+        {
+            _serialPort = new SerialPort();
+
+        }
+
+        public int InitSerialPort(String PortName, int NumPorts, int TestSelected)
         {
 
 #if EMULATE_SERIAL_PORT
@@ -184,7 +191,7 @@ namespace KatpotCS
             }
         }
 
-        public bool GetSerialPortPacket(SerialPort _serialPort, byte[] readArray, int TestSelected)
+        public bool GetSerialPortPacket(byte[] readArray, int TestSelected)
         {
 #if EMULATE_SERIAL_PORT
 	        if (count==100)

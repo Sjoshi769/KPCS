@@ -35,14 +35,28 @@ namespace KatpotCS
         public const int SERIAL_PORT_PACKET_SIZE = 6;
         public const int MAX_NUM_TESTS = 3;
         public const int MAX_COMM_PORTS_IN_SYSTEM = 5;
-
+        public const int NUM_CH_TO_SHOW = 6;
+        public const int PACKET_COUNT_THRESHOLD = 15;
+        public const int MAX_NUM_SAMPLES = 5*1000;
     }
 
     static class Program
     {
 
         static Form1 main_form;
-        static SerialPort _serialPort;
+        static bool SimulateSerialPort = true;
+        static int Val = 0;
+        static int SuccessCount = 0;
+        static int[] DirectionFlag = { 0, 0, 0, 0, 0, 0 };
+        static int[] PacketCount = { 0, 0, 0, 0, 0, 0 };
+        static bool AveragingStarted = false;
+        static int TestCount = 0;
+        static int[] NumSamples;
+        //gcroot<array<array<int>^>^> SampleArray;
+        static int[][] SampleArray;
+        static int[] NewLoadValues;
+        static KPSerialPort MySerialObj;
+
 
         static void newFormThread()
         {
@@ -50,7 +64,14 @@ namespace KatpotCS
             Application.Run(main_form);
         }
 
+        static int AsciiToInt(byte[] SerialPortReadArray, int offset)
+        {
 
+            return (SerialPortReadArray[offset] - (byte)'0') * 100000 + (SerialPortReadArray[offset + 1] - (byte)'0') * 10000 + 
+								(SerialPortReadArray[offset + 2] - (byte)'0') * 1000 + (SerialPortReadArray[offset + 3] - (byte)'0') * 100 + 
+								(SerialPortReadArray[offset + 4] - (byte)'0') * 10 + (SerialPortReadArray[offset + 5] - (byte)'0');
+
+        }
 
         /// <summary>
         /// The main entry point for the application.
@@ -58,12 +79,28 @@ namespace KatpotCS
         [STAThread]
         static void Main()
         {
-            
+            //Thread^ serialPortReadThread;
+            //Thread^ serialPortWriteThread;
+
+            byte[] SerialPortReadArray;
+            int status = (int) WirelessMonitorStatus.SERIAL_PORT_UNINITIALIZED;
+            int[] NewLoadValues;
+
+
             // Enabling Windows XP +visual effects before any controls are created
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            SerialPortReadArray = new byte[33];
+            SampleArray = new int[Constants.MAX_NUM_TESTS][];
+            NumSamples = new int[Constants.MAX_NUM_TESTS];
+            for (int i = 0; i < Constants.MAX_NUM_TESTS; i++)
+                SampleArray[i] = new int[Constants.MAX_NUM_SAMPLES];
+            NewLoadValues = new int[4];
+
             main_form = new Form1();
+
+            MySerialObj = new KPSerialPort();
 
             //main_form = gcnew Form1();
             //newThread = gcnew System::Threading::Thread(gcnew ThreadStart(&mytemp));
@@ -81,6 +118,15 @@ namespace KatpotCS
             //wait while thread is started
             while (!formThread.IsAlive) { };
 
+
+            if (SimulateSerialPort)
+            {
+                AveragingStarted = true;
+                NumSamples[0] = 0;
+                main_form.ClearChart(0);
+
+            }
+
             while (true)
             {
                 //if form thread is closed just exit
@@ -88,11 +134,149 @@ namespace KatpotCS
                 {
                     if (main_form.SerialPortValidated)
                     {
-                        _serialPort.Close();
+                        MySerialObj._serialPort.Close();
                         main_form.SerialPortValidated = false;
                     }
                     break;
                 }
+
+                if (main_form.SerialPortValidated)
+                {
+                    if (MySerialObj.GetSerialPortPacket(SerialPortReadArray, main_form.TestSelected))
+                    {
+                        if (main_form.TestSelected == 0)   //peel test
+                        {
+                            if ((SerialPortReadArray[5] == 0x0A) && (SerialPortReadArray[4] == 0x0D))
+                            {
+                                if ((SerialPortReadArray[0] == 'S') && (SerialPortReadArray[1] == 'T') && 
+							        (SerialPortReadArray[2] == 'R') && (SerialPortReadArray[3] == 'T'))
+						        {
+                                    AveragingStarted = true;
+                                    NumSamples[TestCount] = 0;
+                                    main_form.ClearChart(TestCount);
+                                }
+
+						        else if ((SerialPortReadArray[0] == 'S') && (SerialPortReadArray[1] == 'T') && 
+							        (SerialPortReadArray[2] == 'O') && (SerialPortReadArray[3] == 'P'))
+						        {
+                                    AveragingStarted = false;
+                                    TestCount++;
+                                    if (TestCount == Constants.MAX_NUM_TESTS)
+                                        TestCount = 0;
+                                }
+						        else if (AveragingStarted)
+                                {
+                                    Val = (SerialPortReadArray[0] - '0') * 1000 + (SerialPortReadArray[1] - '0') * 100 + 
+								        (SerialPortReadArray[2] - '0') * 10 + (SerialPortReadArray[3] - '0');
+                                    main_form.UpdateChartPoint(TestCount, Val);
+                                    if (NumSamples[TestCount] < Constants.MAX_NUM_SAMPLES)
+                                        SampleArray[TestCount][NumSamples[TestCount]++] = Val;
+                                }
+                            }
+                        }
+                        else if (main_form.TestSelected == 1)
+                        {
+
+                            if ((SerialPortReadArray[0] == 'T') && (SerialPortReadArray[1] == '1') && (SerialPortReadArray[2] == '=') && (SerialPortReadArray[9] == 0x0D) && (SerialPortReadArray[10] == 0x0A)
+                                && (SerialPortReadArray[11] == 'T') && (SerialPortReadArray[12] == '2') && (SerialPortReadArray[13] == '=') && (SerialPortReadArray[20] == 0x0D) && (SerialPortReadArray[21] == 0x0A)
+                                && (SerialPortReadArray[22] == 'T') && (SerialPortReadArray[23] == '3') && (SerialPortReadArray[24] == '=') && (SerialPortReadArray[31] == 0x0D) && (SerialPortReadArray[32] == 0x0A))
+
+                            {
+                                Val = AsciiToInt(SerialPortReadArray, 3);
+                                SampleArray[0][NumSamples[0]++] = Val;
+                                main_form.UpdateChartPoint(0, Val);
+                                Val = AsciiToInt(SerialPortReadArray, 14);
+                                SampleArray[1][NumSamples[1]++] = Val;
+                                main_form.UpdateChartPoint(1, Val);
+                                Val = AsciiToInt(SerialPortReadArray, 25);
+                                SampleArray[2][NumSamples[2]++] = Val;
+                                main_form.UpdateChartPoint(2, Val);
+                            }
+                            else
+                            {
+
+                            }
+
+                        }
+                        else
+                        {
+                            status = (int) WirelessMonitorStatus.SERIAL_PORT_SYNC_LOST;
+                            main_form.SerialPortValidated = false;
+                            MySerialObj._serialPort.Close();
+
+                        }
+                    }
+                    else
+                    {
+                        status = (int)WirelessMonitorStatus.SERIAL_PORT_READTIMEOUT;
+                        main_form.SerialPortValidated = false;
+                        MySerialObj._serialPort.Close();
+
+                    }
+                }
+                else
+                {
+                    if (MySerialObj._serialPort != null)
+                        MySerialObj._serialPort.Close();
+
+                }
+
+                if (formThread.IsAlive)
+                    main_form.UpdateCommStatus(status);
+
+                if (status!=0)
+                    Thread.Sleep(500);
+
+
+
+                if ((!main_form.SerialPortValidated) && formThread.IsAlive && (!SimulateSerialPort))
+                {
+                    if (MySerialObj._serialPort != null)
+                        MySerialObj._serialPort.Close();
+                    //Attempt to connect to serial port
+
+                    main_form.GetSystemCommPortsAndInitCommMenu();
+                    status = MySerialObj.InitSerialPort(main_form.SelectedCommPort, main_form.NumCommPorts, main_form.TestSelected);
+                    if (status == (int)WirelessMonitorStatus.SERIAL_PORT_SUCCESS)
+                        main_form.SerialPortValidated = true;
+                    if (formThread.IsAlive)
+                        main_form.UpdateCommStatus(status);
+                    if (status != null)
+                        Thread.Sleep(500);
+                }
+
+                if (SimulateSerialPort && AveragingStarted)
+                {
+                    NewLoadValues[0] = 4 * Val + 0;
+                    NewLoadValues[1] = 4 * Val + 1;
+                    NewLoadValues[2] = 4 * Val + 2;
+                    NewLoadValues[3] = 4 * Val + 3;
+
+                    main_form.UpdateChartPoint(TestCount, NewLoadValues[0]);
+                    main_form.UpdateChartPoint(TestCount, NewLoadValues[1]);
+                    main_form.UpdateChartPoint(TestCount, NewLoadValues[2]);
+                    main_form.UpdateChartPoint(TestCount, NewLoadValues[3]);
+                    Val += 4;
+                    NumSamples[TestCount] += 4;
+                    if (Val >= 4 * 10)
+                    {
+                        TestCount++;
+                        if (TestCount < 3)
+                        {
+                            NumSamples[TestCount] = 0;
+                            main_form.ClearChart(TestCount);
+                            Val = 0;
+                        }
+                        else
+                            AveragingStarted = false;
+
+                    }
+
+                    Thread.Sleep(1000);
+                }
+
+
+
             }
         }
     }

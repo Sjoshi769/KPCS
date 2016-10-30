@@ -205,6 +205,24 @@ namespace KatpotCS
             }
         }
 
+        delegate void UpdateChartPointDelegate(int SeriesIndex, int Val);
+
+	    public void UpdateChartPoint(int SeriesIndex, int Val)
+        {
+            if (this.chart1.InvokeRequired)
+            {
+                UpdateChartPointDelegate d =
+                    new UpdateChartPointDelegate(UpdateChartPoint);
+                this.Invoke(d, SeriesIndex, Val);
+                return;
+            }
+            else
+            {
+                this.series1[SeriesIndex].Points.AddY(Val);
+            }
+        }
+
+
         private void fileMenuToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
