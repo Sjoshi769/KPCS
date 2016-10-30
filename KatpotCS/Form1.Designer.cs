@@ -444,6 +444,7 @@ namespace KatpotCS
             this.chart1.Legends.Add(legend1);
             this.chart1.Location = new Point(12, 42);
             this.chart1.Name = "chart1";
+#if ENABL_DESIGNER
             for (int i = 0; i < Constants.MAX_NUM_TESTS; i++)
             {
                 //
@@ -459,6 +460,7 @@ namespace KatpotCS
                 this.chart1.TabIndex = 1;
                 this.chart1.Text = "chart1";
             }
+#endif
 
             // 
             // Form1
@@ -478,7 +480,7 @@ namespace KatpotCS
 
         }
 
-        #endregion
+#endregion
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileMenuToolStripMenuItem;

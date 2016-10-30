@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using System.IO.Ports;
 
@@ -87,7 +87,14 @@ namespace KatpotCS
                 if (main_form.UserExitRequested == true)
                 {
                     //MyXLStest("Trial1");
-                    formThread.Abort();
+                    try
+                    {
+                        formThread.Abort();
+                    }
+                    catch (ThreadAbortException)
+                    {
+                        //for now do nothing
+                    }
                     formThread.Join();
                 }
 
