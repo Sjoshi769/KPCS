@@ -39,6 +39,106 @@ namespace KatpotCS
             }
         }
 
+        delegate void UpdateCommStatusDelegate(int status);
+
+  
+	    public void UpdateCommStatus(int status)
+        {
+            String DisplayMessageString = "";
+
+
+            if (this.label1.InvokeRequired)
+            {
+
+                UpdateCommStatusDelegate  d =
+                    new UpdateCommStatusDelegate(UpdateCommStatus);
+                this.Invoke(d, status);
+            }
+            else
+            {
+
+                switch (status)
+                {
+
+                    case (int) WirelessMonitorStatus.SERIAL_PORT_SUCCESS:
+                        {
+                            //this->label43->Text =  ;
+                            DisplayMessageString =  "Connected To Comm Port " + SelectedCommPort + " .";
+                            break;
+                        }
+
+
+                    case (int) WirelessMonitorStatus.SERIAL_PORT_UNINITIALIZED:
+                        {
+                            //this->label43->Text =  ;
+                            DisplayMessageString = "Serial Port is Not Initialized" ;
+                            break;
+                        }
+
+                    case (int)WirelessMonitorStatus.SERIAL_PORT_WRITE_TIMEOUT:
+                        {
+                            DisplayMessageString = "Write To Comm Port " + SelectedCommPort + " Timed Out.";
+                            break;
+                        }
+
+                    case (int)WirelessMonitorStatus.SERIAL_PORT_READTIMEOUT:
+                        {
+                            DisplayMessageString = "Read From Comm Port " + SelectedCommPort + " Timed Out.";
+                            break;
+                        }
+
+                    case (int)WirelessMonitorStatus.SERIAL_PORT_INVALID_RESPONSE:
+                        {
+                            DisplayMessageString = "Device Connected To Comm Port " + SelectedCommPort + " Is Not WirelessMonitor Receiver.";
+                            break;
+                        }
+
+                    case (int)WirelessMonitorStatus.SERIAL_PORT_NOT_DETECTED:
+                        {
+                            DisplayMessageString = "No valid Comm Port Detected. Please Check The Connection.";
+                            break;
+                        }
+
+                    case (int)WirelessMonitorStatus.SERIAL_PORT_AUTHORIZATION_ERROR:
+                        {
+                            DisplayMessageString = "Access To Comm Port " + SelectedCommPort + " Denied.";
+                            break;
+                        }
+
+                    case (int)WirelessMonitorStatus.SERIAL_PORT_INVALID_NAME_ERROR:
+                        {
+                            DisplayMessageString = "Port Name " + SelectedCommPort + " Is Invalid.";
+                            break;
+                        }
+
+                    case (int)WirelessMonitorStatus.SERIAL_PORT_ARGUMENT_ERROR:
+                        {
+                            DisplayMessageString = "Invalid Configuration Parameters Specified.";
+                            break;
+                        }
+                    case (int)WirelessMonitorStatus.SERIAL_PORT_IO_ERROR:
+
+                        {
+                            DisplayMessageString = "Comm Port " + SelectedCommPort + " Is In Invalid State.";
+                            break;
+                        }
+
+                    case (int)WirelessMonitorStatus.SERIAL_PORT_ALREADY_OPEN_ERROR:
+                        {
+                            DisplayMessageString = "Comm Port " + SelectedCommPort + " Is Already In Use.";
+                            break;
+                        }
+
+                    case (int)WirelessMonitorStatus.SERIAL_PORT_SYNC_LOST:
+                        {
+                            DisplayMessageString = "Serial Port Synchronization Lost. Re-attempting";
+                            break;
+                        }
+
+                }
+                this.label1.Text = DisplayMessageString;   
+            }
+        }
 
         private void fileMenuToolStripMenuItem_Click(object sender, EventArgs e)
         {

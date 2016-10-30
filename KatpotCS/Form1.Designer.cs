@@ -30,6 +30,8 @@ namespace KatpotCS
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();            
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileMenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,6 +78,13 @@ namespace KatpotCS
             this.exitProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.returnToProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.series1 = new System.Windows.Forms.DataVisualization.Charting.Series[3];
+            this.chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            this.legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -93,7 +102,7 @@ namespace KatpotCS
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(906, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(922, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -430,10 +439,6 @@ namespace KatpotCS
 
             UserExitRequested = false;
             SerialPortValidated = false;
-            chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.series1 = new System.Windows.Forms.DataVisualization.Charting.Series[3];
-            chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
 
             // 
             // chart1
@@ -444,6 +449,8 @@ namespace KatpotCS
             this.chart1.Legends.Add(legend1);
             this.chart1.Location = new Point(12, 42);
             this.chart1.Name = "chart1";
+            this.chart1.Size = new System.Drawing.Size(300, 300);
+            this.chart1.TabIndex = 1;
 #if ENABL_DESIGNER
             for (int i = 0; i < Constants.MAX_NUM_TESTS; i++)
             {
@@ -456,21 +463,43 @@ namespace KatpotCS
                 this.series1[i].Legend = "Legend1";
                 this.series1[i].Name = "Sample  Vs Load Test-" + (i + 1).ToString();
                 this.chart1.Series.Add(series1[i]);
-                this.chart1.Size = new Size(984, 357);
+                this.chart1.Size = new Size(984, 300);
                 this.chart1.TabIndex = 1;
                 this.chart1.Text = "chart1";
             }
 #endif
 
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 355);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(91, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Comm Port Status";            
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label1.Location = new System.Drawing.Point(12, 368);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(487, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "                                                                                 ";
+    
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(906, 325);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
             this.Controls.Add(this.chart1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
             this.menuStrip1.ResumeLayout(false);
@@ -535,7 +564,9 @@ namespace KatpotCS
         private System.Windows.Forms.DataVisualization.Charting.Series[] series1;
         private System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1;
         private System.Windows.Forms.DataVisualization.Charting.Legend legend1;
-
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private string SelectedCommPort;
     }
 }
 
