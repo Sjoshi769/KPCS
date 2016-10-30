@@ -125,7 +125,7 @@ namespace KatpotCS
             if (MessageBox.Show("Do u really want to  quit ?", " ", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
             {
                 this.UserExitRequested = true;
-                //Application::Exit();
+                Application.Exit();
             }
         }
 

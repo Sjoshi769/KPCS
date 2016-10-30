@@ -82,22 +82,6 @@ namespace KatpotCS
 
             while (true)
             {
-
-                //check if user wants to close it
-                if (main_form.UserExitRequested == true)
-                {
-                    //MyXLStest("Trial1");
-                    try
-                    {
-                        formThread.Abort();
-                    }
-                    catch (ThreadAbortException)
-                    {
-                        //for now do nothing
-                    }
-                    formThread.Join();
-                }
-
                 //if form thread is closed just exit
                 if (!formThread.IsAlive)
                 {
@@ -108,7 +92,6 @@ namespace KatpotCS
                     }
                     break;
                 }
-
             }
         }
     }
