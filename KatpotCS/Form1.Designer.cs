@@ -449,7 +449,7 @@ namespace KatpotCS
             this.chart1.Name = "chart1";
             this.chart1.Size = new System.Drawing.Size(300, 300);
             this.chart1.TabIndex = 1;
-#if ENABL_DESIGNER
+#if ENABLE_DESIGNER
             for (int i = 0; i < Constants.MAX_NUM_TESTS; i++)
             {
                 //

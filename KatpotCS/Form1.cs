@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
-
+using System.IO;
+//using DevExpress.Xpf.Charts;
 
 namespace KatpotCS
 {
@@ -241,7 +242,35 @@ namespace KatpotCS
 
         private void saveFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Stream myStream;
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "png files (*.png)|*.png|xls files (*.xls)|*.xls";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+            saveFileDialog1.AddExtension = true;
+            if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
 
+                if ((myStream = saveFileDialog1.OpenFile()) != null)
+                {
+                    var extension = Path.GetExtension(saveFileDialog1.FileName);
+
+                    switch (extension.ToLower())
+                    {
+                        case ".png":
+                            // Save as JPEG
+                            this.chart1.SaveImage(myStream, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);
+                            break;
+                        case ".cls":
+                            // Save as XLS
+                            //MyXLStest(saveFileDialog1->FileName, this->TestSelected);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException(extension);
+                    }
+                    myStream.Close();
+                }
+            }
         }
 
         private void cOMPortToolStripMenuItem_Click(object sender, EventArgs e)
@@ -261,7 +290,6 @@ namespace KatpotCS
             this.chartArea1.AxisY.MajorGrid.LineWidth = 1;
             this.gridOffToolStripMenuItem.Checked = false;
             this.gridOnToolStripMenuItem.Checked = true;
-
         }
         private void gridOffToolStripMenuItem_Click(object sender, EventArgs e)
         {

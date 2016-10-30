@@ -84,8 +84,6 @@ namespace KatpotCS
 
             byte[] SerialPortReadArray;
             int status = (int) WirelessMonitorStatus.SERIAL_PORT_UNINITIALIZED;
-            int[] NewLoadValues;
-
 
             // Enabling Windows XP +visual effects before any controls are created
             Application.EnableVisualStyles();
@@ -241,7 +239,7 @@ namespace KatpotCS
                         main_form.SerialPortValidated = true;
                     if (formThread.IsAlive)
                         main_form.UpdateCommStatus(status);
-                    if (status != null)
+                    if (status != 0)
                         Thread.Sleep(500);
                 }
 
