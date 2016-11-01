@@ -30,8 +30,10 @@ namespace KatpotCS
         /// </summary>
         private void InitializeComponent()
         {
+            
             this.chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            this.legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();            
+            this.legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            this.series1 = new System.Windows.Forms.DataVisualization.Charting.Series[Constants.MAX_NUM_TESTS];
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileMenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,11 +81,10 @@ namespace KatpotCS
             this.returnToProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.series1 = new System.Windows.Forms.DataVisualization.Charting.Series[3];
-
+            label2 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -100,7 +101,7 @@ namespace KatpotCS
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(922, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(937, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -468,33 +469,32 @@ namespace KatpotCS
 #endif
 
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 355);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(91, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Comm Port Status";            
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.label1.Location = new System.Drawing.Point(12, 368);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(487, 13);
+            this.label1.Size = new System.Drawing.Size(250, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "                                                                                 ";
-    
+            this.label1.Text = "                                                                            " ;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(12, 355);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(91, 13);
+            label2.TabIndex = 2;
+            label2.Text = "Comm Port Status";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(906, 325);
+            this.ClientSize = new System.Drawing.Size(937, 423);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(label2);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.chart1);
             this.MainMenuStrip = this.menuStrip1;
@@ -502,6 +502,7 @@ namespace KatpotCS
             this.Text = "Form1";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

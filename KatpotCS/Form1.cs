@@ -16,6 +16,13 @@ namespace KatpotCS
     public partial class Form1 : Form
     {
 
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            // Call the OnPaint method of the base class.
+            base.OnPaint(e);
+            // Call methods of the System.Drawing.Graphics object.
+            e.Graphics.DrawString(Text, Font, new SolidBrush(ForeColor), ClientRectangle);
+        }
 
         public Form1()
         {
