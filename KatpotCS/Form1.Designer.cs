@@ -31,9 +31,6 @@ namespace KatpotCS
         private void InitializeComponent()
         {
             
-            this.chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            this.legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            this.series1 = new System.Windows.Forms.DataVisualization.Charting.Series[Constants.MAX_NUM_TESTS];
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileMenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -438,19 +435,32 @@ namespace KatpotCS
 
             UserExitRequested = false;
             SerialPortValidated = false;
+#if ENABLE_DESIGNER
+            //
+            //legend1
+            //
+            this.legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            //
 
             // 
             // chart1
             // 
+            this.chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            this.chart1.ChartAreas.Add(this.chartArea1);
             this.legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            this.chart1.Legends.Add(this.legend1);
             this.chart1.Location = new Point(12, 42);
             this.chart1.Name = "chart1";
             this.chart1.Size = new System.Drawing.Size(300, 300);
             this.chart1.TabIndex = 1;
-#if ENABLE_DESIGNER
+
+
+            //
+            //series[]
+            //
+            series1 = new System.Windows.Forms.DataVisualization.Charting.Series[Constants.MAX_NUM_TESTS];
+
             for (int i = 0; i < Constants.MAX_NUM_TESTS; i++)
             {
                 //
@@ -461,7 +471,7 @@ namespace KatpotCS
                 this.series1[i].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
                 this.series1[i].Legend = "Legend1";
                 this.series1[i].Name = "Sample  Vs Load Test-" + (i + 1).ToString();
-                this.chart1.Series.Add(series1[i]);
+                this.chart1.Series.Add(this.series1[i]);
                 this.chart1.Size = new Size(984, 300);
                 this.chart1.TabIndex = 1;
                 this.chart1.Text = "chart1";

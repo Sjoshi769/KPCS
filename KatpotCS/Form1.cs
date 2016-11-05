@@ -18,10 +18,25 @@ namespace KatpotCS
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            
+            // Call methods of the System.Drawing.Graphics object.
+            // Create pen.
+            Pen blackPen = new Pen(Color.Black, 3);
+            System.Drawing.Graphics formGraphics = this.CreateGraphics();
+
+            // Create location and size of rectangle.
+            int x = 0;
+            int y = 0;
+            int width = 200;
+            int height = 200;
+            Rectangle rect = new Rectangle(x, y, width, height);
+            // Draw rectangle to screen.
+            formGraphics.DrawRectangle(blackPen, rect);
+            
+            blackPen.Dispose();
+            formGraphics.Dispose();
             // Call the OnPaint method of the base class.
             base.OnPaint(e);
-            // Call methods of the System.Drawing.Graphics object.
-            e.Graphics.DrawString(Text, Font, new SolidBrush(ForeColor), ClientRectangle);
         }
 
         public Form1()
