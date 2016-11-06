@@ -15,33 +15,50 @@ namespace KatpotCS
 {
     public partial class Form1 : Form
     {
+        private void Form1_Paint(object sender, System.Windows.Forms.PaintEventArgs pe)
+        {
+            // Declares the Graphics object and sets it to the Graphics object
+            // supplied in the PaintEventArgs.
+            Graphics g = pe.Graphics;
+            // Insert code to paint the form here.
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            
+            //base.OnPaint(e);
             // Call methods of the System.Drawing.Graphics object.
             // Create pen.
             Pen blackPen = new Pen(Color.Black, 3);
             System.Drawing.Graphics formGraphics = this.CreateGraphics();
 
             // Create location and size of rectangle.
-            int x = 0;
-            int y = 0;
+            int x = 110;
+            int y = 110;
             int width = 200;
             int height = 200;
             Rectangle rect = new Rectangle(x, y, width, height);
             // Draw rectangle to screen.
-            formGraphics.DrawRectangle(blackPen, rect);
+            //formGraphics.DrawRectangle(blackPen, rect);
             
-            blackPen.Dispose();
-            formGraphics.Dispose();
             // Call the OnPaint method of the base class.
-            base.OnPaint(e);
+            //base.OnPaint(e);
+            //rect.v
+
+
+            // Declare and instantiate a new pen.
+            System.Drawing.Pen myPen = new System.Drawing.Pen(Color.Aqua);
+
+            // Draw an aqua rectangle in the rectangle represented by the control.
+            e.Graphics.DrawRectangle(myPen, rect);
+            //blackPen.Dispose();
+            //formGraphics.Dispose();
         }
 
         public Form1()
         {
             InitializeComponent();
+            SetStyle(ControlStyles.ResizeRedraw, true);
+            //this.control.Add()
         }
 
         delegate void ClearChartDelegate(int index);
@@ -322,6 +339,13 @@ namespace KatpotCS
             this.gridOnToolStripMenuItem.Checked = false;
         }
 
+        private void MouseEvents(Object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                //blah blah
+            }
+        }
         private void autoCaptureToolStripMenuItem_Click(object sender, EventArgs e)
         {
 

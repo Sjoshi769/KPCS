@@ -44,7 +44,11 @@ namespace KatpotCS
     {
 
         static Form1 main_form;
+#if EMULATE_SERIAL_PORT
         static bool SimulateSerialPort = true;
+#else
+        static bool SimulateSerialPort = false;
+#endif
         static int Val = 0;
         static int SuccessCount = 0;
         static int[] DirectionFlag = { 0, 0, 0, 0, 0, 0 };
@@ -122,7 +126,6 @@ namespace KatpotCS
                 AveragingStarted = true;
                 NumSamples[0] = 0;
                 main_form.ClearChart(0);
-
             }
 
             while (true)
@@ -194,14 +197,12 @@ namespace KatpotCS
                             {
 
                             }
-
                         }
                         else
                         {
                             status = (int) WirelessMonitorStatus.SERIAL_PORT_SYNC_LOST;
                             main_form.SerialPortValidated = false;
                             MySerialObj._serialPort.Close();
-
                         }
                     }
                     else
@@ -209,14 +210,12 @@ namespace KatpotCS
                         status = (int)WirelessMonitorStatus.SERIAL_PORT_READTIMEOUT;
                         main_form.SerialPortValidated = false;
                         MySerialObj._serialPort.Close();
-
                     }
                 }
                 else
                 {
                     if (MySerialObj._serialPort != null)
                         MySerialObj._serialPort.Close();
-
                 }
 
                 if (formThread.IsAlive)
@@ -224,8 +223,6 @@ namespace KatpotCS
 
                 if (status!=0)
                     Thread.Sleep(500);
-
-
 
                 if ((!main_form.SerialPortValidated) && formThread.IsAlive && (!SimulateSerialPort))
                 {
@@ -256,6 +253,7 @@ namespace KatpotCS
                     main_form.UpdateChartPoint(TestCount, NewLoadValues[3]);
                     Val += 4;
                     NumSamples[TestCount] += 4;
+
                     if (Val >= 4 * 10)
                     {
                         TestCount++;
@@ -267,14 +265,9 @@ namespace KatpotCS
                         }
                         else
                             AveragingStarted = false;
-
                     }
-
                     Thread.Sleep(1000);
                 }
-
-
-
             }
         }
     }

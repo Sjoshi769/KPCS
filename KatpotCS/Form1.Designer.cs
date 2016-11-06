@@ -1,4 +1,6 @@
 ﻿using System.Drawing;
+using System.Windows.Forms;
+
 
 namespace KatpotCS
 {
@@ -456,6 +458,18 @@ namespace KatpotCS
             this.chart1.TabIndex = 1;
 
 
+            //enable zoom
+            this.chartArea1.AxisX.ScaleView.Zoomable = true;
+            this.chartArea1.AxisY.ScaleView.Zoomable = false;
+
+            this.chartArea1.CursorX.IsUserSelectionEnabled = true;
+            this.chartArea1.CursorY.IsUserSelectionEnabled = false;
+
+            this.chartArea1.CursorX.AutoScroll = true;
+            this.chartArea1.CursorY.AutoScroll = false;
+
+
+
             //
             //series[]
             //
@@ -497,6 +511,14 @@ namespace KatpotCS
             label2.Size = new System.Drawing.Size(91, 13);
             label2.TabIndex = 2;
             label2.Text = "Comm Port Status";
+
+            //
+            //mouse event handler
+            //
+            //this.MouseWheel += new System.Windows.Forms.MouseEventHandler(MouseEvents);
+            //
+
+
             // 
             // Form1
             // 
